@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Earned Value Calculator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div>
+      <h1>Earned Value Calculator</h1>
+      <p class="sub">EVM metrics + snapshots (offline)</p>
+    </div>
+    <button id="helpBtn" class="btn ghost">Help</button>
+  </header>
+
+  <main class="wrap">
+    <!-- INPUTS -->
+    <section class="card">
+      <div class="cardHead">
+        <h2>Inputs</h2>
+        <span class="pill">EVM</span>
+      </div>
+
+      <div class="grid">
+        <div class="field">
+          <label for="bac">BAC</label>
+          <input type="number" id="bac" min="0" placeholder="Budget at Completion">
+        </div>
+
+        <div class="field">
+          <label for="pv">PV</label>
+          <input type="number" id="pv" min="0" placeholder="Planned Value">
+        </div>
+
+        <div class="field">
+          <label for="ev">EV</label>
+          <input type="number" id="ev" min="0" placeholder="Earned Value">
+        </div>
+
+        <div class="field">
+          <label for="ac">AC</label>
+          <input type="number" id="ac" min="0" placeholder="Actual Cost">
+        </div>
+
+        <div class="field">
+          <label for="statusDate">Status Date</label>
+          <input type="date" id="statusDate">
+        </div>
+
+        <div class="field">
+          <label for="unit">Unit</label>
+          <select id="unit">
+            <option value="USD">$ USD</option>
+            <option value="EUR">€ EUR</option>
+            <option value="GBP">£ GBP</option>
+            <option value="OTHER">Other</option>
+          </select>
+        </div>
+
+        <div class="field wide">
+          <label for="notes">Notes</label>
+          <textarea id="notes" rows="3" placeholder="Optional notes..."></textarea>
+        </div>
+
+        <div class="field wide">
+          <label for="eacModel">EAC Model</label>
+          <select id="eacModel">
+            <option value="EAC_AC_plus_BAC_minus_EV">AC + (BAC - EV)</option>
+            <option value="EAC_BAC_over_CPI">BAC / CPI</option>
+            <option value="EAC_BAC_over_CPIxSPI">BAC / (CPI × SPI)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn primary" onclick="calculate()">Calculate</button>
+        <button class="btn" onclick="clearFields()">Clear</button>
+        <button class="btn" onclick="downloadCsv()">Download CSV</button>
+        <button class="btn" onclick="saveSnapshot()">Save Snapshot</button>
+      </div>
+    </section>
+
+    <!-- RESULTS -->
+    <section class="card">
+      <div class="cardHead">
+        <h2>Results</h2>
+        <span class="pill">Live</span>
+      </div>
+      <div id="resultsGrid" class="results"></div>
+    </section>
+
+    <!-- HISTORY -->
+    <section class="card">
+      <div class="cardHead">
+        <h2>History</h2>
+        <button class="btn" onclick="loadHistory()">Refresh</button>
+      </div>
+      <div class="tableWrap">
+        <table id="historyTable"></table>
+      </div>
+    </section>
+  </main>
+
+  <!-- HELP DRAWER -->
+  <aside id="helpDrawer" class="drawer">
+    <div class="drawerHead">
+      <h2>Help & Definitions</h2>
+      <button class="btn ghost" onclick="toggleHelp()">Close</button>
+    </div>
+    <div class="drawerBody">
+      <p><strong>EV:</strong> Earned Value</p>
+      <p><strong>PV:</strong> Planned Value</p>
+      <p><strong>AC:</strong> Actual Cost</p>
+      <p><strong>CPI:</strong> EV ÷ AC (Cost Performance Index)</p>
+      <p><strong>SPI:</strong> EV ÷ PV (Schedule Performance Index)</p>
+      <p><strong>EAC:</strong> Estimate At Completion</p>
+      <p><strong>ETC:</strong> Estimate To Complete</p>
+      <p><strong>VAC:</strong> Variance At Completion</p>
+      <p><strong>TCPI:</strong> To Complete Performance Index</p>
+    </div>
+  </aside>
+
+  <script src="script.js"></script>
+</body>
+</html>
